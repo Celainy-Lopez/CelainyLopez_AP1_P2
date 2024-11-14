@@ -1,10 +1,16 @@
 using CelainyLopez_AP1_P2.Components;
+using CelainyLopez_AP1_P2.DAL;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+//Inyeccion del contexto
+var ConStr = builder.Configuration.GetConnectionString("SqlConStr");
+builder.Services.AddDbContextFactory<Context>(c => c.UseSqlServer("Name=SqlConStr"));
 
 var app = builder.Build();
 
