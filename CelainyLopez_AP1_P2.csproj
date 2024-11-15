@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Components\Pages\RegistroPages\Create.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameWorkCore" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameWorkCore.SqlServer" Version="9.0.0" />
     <PackageReference Include="microsoft.entityframeworkcore.tools" Version="9.0.0">
@@ -17,6 +21,18 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Components\Pages\RegistroPages\Create.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Components\Pages\RegistroPages\Create.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Components\Pages\RegistroPages\Create.razor" />
   </ItemGroup>
 
 </Project>
