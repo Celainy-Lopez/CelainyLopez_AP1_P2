@@ -3,4 +3,9 @@
 public class Registros
 {
     public int Id { get; set; }
+    public DateTime Fecha { get; set; }
+
+    public string Nombres { get; set; }
+
+    public double Monto { get; set; }
 }
