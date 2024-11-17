@@ -1,3 +1,4 @@
+using BlazorBootstrap;
 using CelainyLopez_AP1_P2.Components;
 using CelainyLopez_AP1_P2.DAL;
 using CelainyLopez_AP1_P2.Services;
@@ -13,6 +14,7 @@ builder.Services.AddRazorComponents()
 var ConStr = builder.Configuration.GetConnectionString("SqlConStr");
 builder.Services.AddDbContextFactory<Context>(c => c.UseSqlServer("Name=SqlConStr"));
 builder.Services.AddScoped<RegistrosService>();
+builder.Services.AddSingleton<ToastService>();
 
 var app = builder.Build();
 
