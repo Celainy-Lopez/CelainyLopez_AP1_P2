@@ -2,9 +2,14 @@
 @inject RegistrosService registroService
 @inject NavigationManager navigationManager
 @rendermode InteractiveServer
+@*@inject ToastService Toast*@
 
 
 <PageTitle>Index</PageTitle>
+@*
+    <Toasts class="p-3" AutoHide="true" Delay="4000" Placement="ToastsPlacement.TopRight" />
+    Toast.Notify(new(ToastType.Success, $"Notificación."));
+*@
 <div class="container">
     <div class="card shadow-lg">
         <div class="card-header space-between">
@@ -90,18 +95,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var cobro in ListaCobros)
+                    @foreach (var cobro in ListaRegistro)
                     {
                         <tr>
-                            <td> @cobro.CobroId</td>
+                            <td> @cobro.Id</td>
                             <td> @cobro.Fecha.ToShortDateString()</td>
-                            <td> @cobro.Deudor.Nombres</td>
+                            <td> @cobro.Nombres</td>
                             <td> @cobro.Monto.ToString("N2")</td>
 
                             <td class="text-center">
-                                <a href="/Cobro/Edit/@cobro.CobroId"
+                                <a href="/Cobro/Edit/@cobro.Id"
                                    class="btn btn-outline-primary bi bi-pencil-square"></a>
-                                <a href="/Cobro/Delete/@cobro.CobroId" class="btn btn-outline-danger bi bi-trash"></a>
+                                <a href="/Cobro/Delete/@cobro.Id" class="btn btn-outline-danger bi bi-trash"></a>
                             </td>
                         </tr>
                     }
@@ -109,14 +114,52 @@
             </table>
         </div>
         <div class="card-footer space-between">
-            <label class="ms-3"><strong>Cantidad:</strong> @ListaCobros.Count</label>
+            <label class="ms-3"><strong>Cantidad:</strong> @ListaRegistro.Count</label>
             <div class="col-5">
-                <label class="ms-5"><strong>Total:</strong> $@ListaCobros.Sum(p => p.Monto).ToString("N2")</label>
+                <label class="ms-5"><strong>Total:</strong> $@ListaRegistro.Sum(p => p.Monto).ToString("N2")</label>
             </div>
         </div>
     </div>
 </div>
 
 @code {
+
+    public List<Registros> ListaRegistro { get; set; } = new List<Registros>();
+
+    public string Filtro { get; set; } = string.Empty;
+    public string ValorFiltro { get; set; } = string.Empty;
+
+    public DateTime? Desde { get; set; }
+
+    public DateTime? Hasta { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        //ListaRegistro = await registroService.Listar(c => c.Id > 0);
+        Desde = null;
+        Hasta = null;
+    }
+    private async Task Buscar()
+    {
+        if (Filtro == "Fecha")
+            ListaRegistro = await registroService
+            .Listar(f => f.Fecha >= Desde && f.Fecha <= Hasta);
+
+        else if (ValorFiltro.Trim() != "" && Filtro == "Deudor")
+        {
+            ListaRegistro = await registroService
+            .Listar(p => p.Nombres.ToLower()
+            .Contains(ValorFiltro.ToLower()));
+        }
+    }
+    private async Task Restablecer()
+    {
+        ListaRegistro = await registroService.Listar(e => e.Id > 0);
+        Filtro = string.Empty;
+        ValorFiltro = string.Empty;
+        Desde = null;
+        Hasta = null;
+    }
+
 
 }
