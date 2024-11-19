@@ -13,7 +13,7 @@ builder.Services.AddRazorComponents()
 //Inyeccion del contexto
 var ConStr = builder.Configuration.GetConnectionString("SqlConStr");
 builder.Services.AddDbContextFactory<Context>(c => c.UseSqlServer("Name=SqlConStr"));
-builder.Services.AddScoped<RegistrosService>();
+builder.Services.AddScoped<CombosService>();
 builder.Services.AddSingleton<ToastService>();
 
 var app = builder.Build();

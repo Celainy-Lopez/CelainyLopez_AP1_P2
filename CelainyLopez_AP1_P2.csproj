@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Components\Pages\RegistroPages\Create.razor" />
+    <Content Remove="Components\Pages\ArticulosPicker.razor" />
+    <Content Remove="Components\Pages\CombosPages\Create.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,15 +27,21 @@
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Components\Pages\RegistroPages\Create.razor" />
+    <UpToDateCheckInput Remove="Components\Pages\CombosPages\Create.razor" />
   </ItemGroup>
 
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="Components\Pages\RegistroPages\Create.razor" />
+    <_ContentIncludedByDefault Remove="Components\Pages\ArticulosPicker.razor" />
+    <_ContentIncludedByDefault Remove="Components\Pages\CombosPages\Create.razor" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Components\Pages\RegistroPages\Create.razor" />
+    <None Include="Components\Pages\ArticulosPicker.razor" />
+    <None Include="Components\Pages\CombosPages\Create.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Components\Pages\ArticulosPicker.razor" />
   </ItemGroup>
 
 </Project>
