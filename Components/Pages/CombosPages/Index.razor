@@ -2,12 +2,10 @@
 @inject CombosService registroService
 @inject NavigationManager navigationManager
 @rendermode InteractiveServer
-@*@inject ToastService Toast*@
 
 
 <PageTitle>Index</PageTitle>
 @*
-    <Toasts class="p-3" AutoHide="true" Delay="4000" Placement="ToastsPlacement.TopRight" />
     Toast.Notify(new(ToastType.Success, $"Notificación."));
 *@
 <div class="container">
@@ -138,7 +136,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        //ListaRegistro = await registroService.Listar(c => c.ComboId > 0);
+        ListaRegistro = await registroService.Listar(c => c.ComboId > 0);
         Desde = null;
         Hasta = null;
     }
@@ -163,6 +161,4 @@
         Desde = null;
         Hasta = null;
     }
-
-
 }
