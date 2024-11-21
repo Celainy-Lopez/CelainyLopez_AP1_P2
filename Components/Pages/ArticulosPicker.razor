@@ -1,4 +1,6 @@
-﻿<div class="col-auto input-group align-items-center">
+﻿@inject ToastService Toast
+<Toasts class="p-3" AutoHide="true" Delay="4000" Placement="ToastsPlacement.TopRight" />
+<div class="col-auto input-group align-items-center">
 
     @*Articulos*@
     <InputSelect class="form-control form-select" @bind-Value="ArticuloId">
@@ -11,19 +13,14 @@
 
     @*Cantidad*@
     <label class="col-form-label input-group-text">Cantidad </label>
-    <InputNumber class="form-control" @bind-Value="Cantidad" placeholder="0"></InputNumber>
+    <InputNumber class="form-control" @bind-Value="Cantidad" placeholder="$0.00"></InputNumber>
 
     @*Precio*@
-    <label class="col-form-label input-group-text">Precio</label>
+    <label class="col-form-label input-group-text">Costo</label>
     <InputNumber class="form-control" @bind-Value="Precio" placeholder="0.00$" readonly></InputNumber>
     <button type="button" class="btn btn-outline-success bi bi-plus" @onclick="BuscarCantidad" >Agregar detalle</button>
 
  </div>
-
-@if (!string.IsNullOrEmpty(Mensaje))
-{
-    <div class="alert alert-danger bi-exclamation-triangle-fill mt-2">@Mensaje</div>
-}
 
 @code
 {
@@ -43,25 +40,22 @@
     [Parameter]
     public int Cantidad { get; set; }
 
-    public string Mensaje { get; set; }
-
 
     public async Task BuscarCantidad()
     {
-        Mensaje = string.Empty;
         if (ArticuloId > 0)
         {
             var articulo = ListArticulos.Single(p => p.ArticuloId == ArticuloId);
             if(Cantidad <= 0)
             {
-                Mensaje = "La cantidad debe ser mayor que 0";
+                Toast.Notify(new(ToastType.Danger, "La cantidad debe ser mayor que 0."));
                 return;
             }
             await ArticuloSeleccionado.InvokeAsync((articulo, Cantidad));
         }
         else
         {
-            Mensaje = "Seleccione un articulo";
+            Toast.Notify(new(ToastType.Danger, "Seleccione un articulo."));
             return;
         }
     }
