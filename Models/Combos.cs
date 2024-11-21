@@ -7,7 +7,7 @@ public class Combos
 {
     [Key]
     public int ComboId { get; set; }
-    public DateTime Fecha { get; set; }
+    public DateTime Fecha { get; set; } = DateTime.Now;
 
     [Required(ErrorMessage = "Por favor ingrese una descripción valida")]
     public string Descripcion { get; set; }
