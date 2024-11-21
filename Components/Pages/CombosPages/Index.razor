@@ -1,13 +1,10 @@
 ﻿@page "/Combos/Index"
-@inject CombosService registroService
+@inject CombosService comboService
 @inject NavigationManager navigationManager
 @rendermode InteractiveServer
 
 
 <PageTitle>Index</PageTitle>
-@*
-    Toast.Notify(new(ToastType.Success, $"Notificación."));
-*@
 <div class="container">
     <div class="card shadow-lg">
         <div class="card-header space-between">
@@ -100,14 +97,15 @@
                             <td> @combo.ComboId</td>
                             <td> @combo.Fecha.ToShortDateString()</td>
                             <td> @combo.Descripcion</td>
-                            <td> @combo.Precio.ToString("N2")</td>
+                            <td> $@combo.Precio.ToString("N2")</td>
                             <td> @combo.Vendido</td>
 
 
                             <td class="text-center">
-                                <a href="/Cobro/Edit/@combo.ComboId"
+                                <a href="/Combos/Details/@combo.ComboId" class="btn btn-outline-primary bi bi-eye"></a>
+                                <a href="/Combos/Edit/@combo.ComboId"
                                    class="btn btn-outline-primary bi bi-pencil-square"></a>
-                                <a href="/Cobro/Delete/@combo.ComboId" class="btn btn-outline-danger bi bi-trash"></a>
+                                <a href="/Combos/Delete/@combo.ComboId" class="btn btn-outline-danger bi bi-trash"></a>
                             </td>
                         </tr>
                     }
@@ -136,26 +134,26 @@
 
     protected override async Task OnInitializedAsync()
     {
-        ListaRegistro = await registroService.Listar(c => c.ComboId > 0);
+        ListaRegistro = await comboService.Listar(c => c.ComboId > 0);
         Desde = null;
         Hasta = null;
     }
     private async Task Buscar()
     {
         if (Filtro == "Fecha")
-            ListaRegistro = await registroService
+            ListaRegistro = await comboService
             .Listar(f => f.Fecha >= Desde && f.Fecha <= Hasta);
 
         else if (ValorFiltro.Trim() != "" && Filtro == "Deudor")
         {
-            ListaRegistro = await registroService
+            ListaRegistro = await comboService
             .Listar(p => p.Descripcion.ToLower()
             .Contains(ValorFiltro.ToLower()));
         }
     }
     private async Task Restablecer()
     {
-        ListaRegistro = await registroService.Listar(e => e.ComboId > 0);
+        ListaRegistro = await comboService.Listar(e => e.ComboId > 0);
         Filtro = string.Empty;
         ValorFiltro = string.Empty;
         Desde = null;
