@@ -1,5 +1,71 @@
-﻿<h3>Details</h3>
+﻿@page "/Combos/Details/"
+@page "/Combos/Details/{ComboId:int}"
+@rendermode InteractiveServer
+@inject CombosService comboService
+@inject NavigationManager navigation
+
+
+<PageTitle>Detalles combo</PageTitle>
+<div class="container">
+	<div class="card shadow-lg">
+		<div class="card-header bg-primary text-white text-center ">
+			<h2 class="bi bi-journal-x"><strong>Detalles combo</strong></h2>
+		</div>
+		<div class="card-body">
+			@if (Combo.Precio != null)
+			{
+				@*Datos*@
+				<div class="mb-1">
+					@*ComboId*@
+					<div><strong>Combo ID:</strong> @Combo.ComboId</div>
+					@*Fecha*@
+					<div><strong>Fecha:</strong> @Combo.Fecha</div>
+					@*Descripcion*@
+					<div><strong>Descripci&oacute;n:</strong> @Combo.Descripcion</div>
+					@*Precio*@
+					<div><strong>Precio:</strong> @($"{Combo.Precio:C}")</div>
+					@*Vendido*@
+					<div><strong>Vendido:</strong> @Combo.Vendido</div>
+
+					@*ArticulosUtilizados*@
+					<div class="border border-success p-3 mt-3">
+						<h5>Detalles articulos utilizados</h5>
+						@foreach (var detalle in Combo.CombosDetalles)
+						{
+							<div>Articulo Id: @detalle.ArticuloId</div>
+							<div>Precio de Articulo: $@detalle.Costo.ToString("N2") </div>
+							<div>Cantidad de Articulos: @detalle.Cantidad</div>
+							<div>Total en Articulos: @($"{detalle.Costo * detalle.Cantidad:C}")</div>
+
+							<br />
+						}
+					</div>
+
+					<div class="card-footer">
+						<a href="/Combos/Index"
+						   class="btn btn-outline-secondary">
+							<span class="bi bi-arrow-left mt-3"></span> Volver
+						</a>
+					</div>
+
+				</div>
+			}
+		</div>
+	</div>
+</div>
 
 @code {
 
+	[Parameter]
+	public int ComboId { get; set; }
+	public Combos Combo { get; set; } = new Combos();
+
+	protected override async Task OnInitializedAsync()
+	{
+		if (ComboId > 0)
+		{
+			Combo = (await comboService.Buscar(ComboId));
+		}
+
+	}
 }
