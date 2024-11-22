@@ -15,7 +15,7 @@ public class Combos
 
     [Required(ErrorMessage = "Ingrese un precio valido")]
     [Range(0.01, double.MaxValue, ErrorMessage = "El precio debe ser mayor que 0")]
-    public double Precio { get; set; }
+    public double? Precio { get; set; }
 
     public bool Vendido {  get; set; }
 

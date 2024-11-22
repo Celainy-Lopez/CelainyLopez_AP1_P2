@@ -97,7 +97,7 @@
                             <td> @combo.ComboId</td>
                             <td> @combo.Fecha.ToShortDateString()</td>
                             <td> @combo.Descripcion</td>
-                            <td> $@combo.Precio.ToString("N2")</td>
+                            <td> $@combo.Precio?.ToString("N2")</td>
                             <td> @combo.Vendido</td>
 
 
@@ -115,7 +115,7 @@
         <div class="card-footer space-between">
             <label class="ms-3"><strong>Cantidad:</strong> @ListaRegistro.Count</label>
             <div class="col-5">
-                <label class="ms-5"><strong>Total:</strong> $@ListaRegistro.Sum(p => p.Precio).ToString("N2")</label>
+                <label class="ms-5"><strong>Total:</strong> @($"{ListaRegistro?.Sum(p => p.Precio):C}")</label>
             </div>
         </div>
     </div>
