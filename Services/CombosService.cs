@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using CelainyLopez_AP1_P2.Models;
 using System.Linq.Expressions;
-
+using static Azure.Core.HttpHeader;
 namespace CelainyLopez_AP1_P2.Services;
 
 public class CombosService(IDbContextFactory<Context> DbFactory)
@@ -66,7 +66,8 @@ public class CombosService(IDbContextFactory<Context> DbFactory)
             }
         }
 
-        await AfectarArticulo(comboOriginal.CombosDetalles.ToArray(), true);
+        await AfectarArticulo(combos.CombosDetalles.ToArray(), true);
+
         contexto.Entry(comboOriginal).CurrentValues.SetValues(combos);
 
         foreach (var detalle in combos.CombosDetalles)
@@ -86,7 +87,6 @@ public class CombosService(IDbContextFactory<Context> DbFactory)
 
         return await contexto.SaveChangesAsync() > 0;
     }
-
     public async Task<bool> Eliminar(int id)
     {
         await using var contexto = await DbFactory

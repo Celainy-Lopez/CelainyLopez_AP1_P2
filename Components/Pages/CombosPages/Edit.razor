@@ -125,8 +125,6 @@
 
 	public async Task Modificar()
 	{
-		var comboOriginal = await comboService.Buscar(ComboId);
-
 		if (Combo.CombosDetalles.Count == 0)
 		{
             Toast.Notify(new(ToastType.Danger, "Debe agregar al menos un detalle antes de crear el combo."));
