@@ -121,7 +121,7 @@
         {
             await combosService.Guardar(Combo);
             Toast.Notify(new(ToastType.Success, "Combo creado exitosamente."));
-            await Task.Delay(4000);
+            await Task.Delay(2000);
             Combo = new Combos();
             navigation.NavigateTo("/Combos/Index");
         }
