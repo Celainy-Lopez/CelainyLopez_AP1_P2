@@ -19,6 +19,6 @@ public class CombosDetalle
     [Range(0.01, int.MaxValue, ErrorMessage = "El precio debe ser mayor que 0")]
     public int Cantidad {  get; set; }
 
-    [Range(0.01, double.MaxValue, ErrorMessage = "El costp debe ser mayor que 0")]
+    [Range(0.01, double.MaxValue, ErrorMessage = "El costo debe ser mayor que 0")]
     public double Costo { get; set; }
 }
