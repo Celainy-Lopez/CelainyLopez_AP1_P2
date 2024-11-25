@@ -2,9 +2,12 @@
 @inject CombosService comboService
 @inject NavigationManager navigationManager
 @rendermode InteractiveServer
+@inject ToastService Toast
 
 
 <PageTitle>Index</PageTitle>
+<Toasts class="p-3" AutoHide="true" Delay="4000" Placement="ToastsPlacement.TopRight" />
+
 <div class="container">
     <div class="card shadow-lg">
         <div class="card-header space-between">
@@ -144,12 +147,22 @@
             ListaRegistro = await comboService
             .Listar(f => f.Fecha >= Desde && f.Fecha <= Hasta);
 
-        else if (ValorFiltro.Trim() != "" && Filtro == "Deudor")
+
+        else if (ValorFiltro.Trim() != "" && Filtro == "ComboId")
         {
-            ListaRegistro = await comboService
-            .Listar(p => p.Descripcion.ToLower()
-            .Contains(ValorFiltro.ToLower()));
+            if (int.TryParse(ValorFiltro, out int comboId))
+            {
+                ListaRegistro = await comboService
+                    .Listar(p => p.ComboId == comboId);
+            }
         }
+        if (!ListaRegistro.Any())
+        {
+            Toast.Notify(new(ToastType.Danger, "Este combo no existe"));
+            ListaRegistro = await comboService.Listar(c => c.ComboId > 0);
+
+        }
+
     }
     private async Task Restablecer()
     {
