@@ -35,16 +35,27 @@
 					@*ArticulosUtilizados*@
 					<div class="border border-success p-3 mt-3">
 						<h5>Detalles articulos utilizados</h5>
-						@foreach (var detalle in Combo.CombosDetalles)
-						{
-							<div>Articulo Id: @detalle.ArticuloId</div>
-							<div>Precio de Articulo: $@detalle.Costo.ToString("N2") </div>
-							<div>Cantidad de Articulos: @detalle.Cantidad</div>
-							<div>Total en Articulos: @($"{detalle.Costo * detalle.Cantidad:C}")</div>
-
-
-							<br />
-						}
+						<table class="table table-hover text-center mt-3">
+							<thead class="table  table-striped text-black ">
+								<tr>
+									<th><strong>Articulo Id</strong></th>
+									<th><strong>Precio</strong></th>
+									<th><strong>Cantidad</strong></th>
+									<th><strong>Total</strong></th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach (var detalle in Combo.CombosDetalles)
+								{
+									<tr>
+										<td> @detalle.ArticuloId</td>
+										<td> $@detalle.Costo.ToString("N2") </td>
+										<td> @detalle.Cantidad</td>
+										<td>  @($"{detalle.Costo * detalle.Cantidad:C}")</td>
+									</tr>
+								}
+							</tbody>
+						</table>
 					</div>
 
 					<div class="card-footer">
