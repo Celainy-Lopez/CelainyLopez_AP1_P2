@@ -78,7 +78,16 @@
 
 	public async Task Eliminar()
 	{
+		if (Combo.Vendido)
+		{
+			Toast.Notify(new(ToastType.Danger, "No se puede eliminar un combo vendido"));
+			await Task.Delay(2000);
+			navigation.NavigateTo("/Combos/Index");
+			return;
+
+		}
 		var eliminar = await comboService.Eliminar(Combo.ComboId);
+
 
 		if (eliminar)
 		{
